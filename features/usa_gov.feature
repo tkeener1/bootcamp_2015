@@ -1,4 +1,4 @@
-Feature: Cards
+Feature: USA.gov
 
   Scenario: opening a web page    Card 2
 

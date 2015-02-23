@@ -41,12 +41,13 @@ end
 
 
 Then(/^I see a search field$/) do
-  fail('The browser does not contain a search box') unless BROWSER.text_field(:id => 'query').visible?
+  # old fail('The browser does not contain a search box') unless BROWSER.text_field(:id => 'query').visible?
+  expect(BROWSER.text_field(:id=>'query')).to be_visible
 end
 
 Then (/^the field value is "(.*?)"$/) do |arg1|
-  fail('the browser does not contain the correct place holder') unless BROWSER.text_field(:id => 'query').placeholder.eql? arg1
-
+  #fail('the browser does not contain the correct place holder') unless BROWSER.text_field(:id => 'query').placeholder.eql? arg1
+  expect(BROWSER.text_field(:id=>'query').placeholder).to eq(arg1)
 
 end
 
@@ -56,8 +57,8 @@ end
 
 
 Then (/^the search button label is "(.*?)"$/) do |arg1|
-  fail('Search button is not titled correctly') unless BROWSER.button(:id => 'buscarSubmit').value.eql?(arg1)
-
+  #fail('Search button is not titled correctly') unless BROWSER.button(:id => 'buscarSubmit').value.eql?(arg1)
+   expect(BROWSER.button(:id=>'buscarSubmit').value).to eq(arg1)
 end
 
 # Card 5.1******************************************************************************************************
@@ -94,7 +95,8 @@ Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
                    fail ("Comparison #{compare_to} not supported")
                end
 
-  fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
+  #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
+  expect(result_count).to be >= (count)
 
   puts expected_count
   puts result_count
@@ -131,8 +133,8 @@ Then(/^maximum of (\d+) answers per page returned$/) do |expected_count|
                    fail ("Comparison #{compare_to} not supported")
                end
 
-  fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
-
+  #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
+  expect(result_count).to be == (count)
 
 
 end
