@@ -72,48 +72,11 @@ Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
   #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
   expect(result_count).to be >= (count)
 
-  puts expected_count
-  puts result_count
-  puts comparison
 end
 
 
-# Card 5.2**************************************************************************************************
 
 
-Then(/^maximum of (\d+) answers per page returned$/) do |expected_count|
-
-  # parse expected count
-  parse_count = expected_count.to_s.match(/(\d*)([a-z|A-Z ]*)(\d*)/)
-  compare_to = parse_count[2].strip
-  count = parse_count[1] == '' ? parse_count[3].to_i : parse_count[1].to_i
-
-  #get the number of results
-  result_count = BROWSER.divs(:id => /^result-/).size
-
-
-  comparison = case compare_to
-                 when '', /equal/
-                   count == result_count
-                 when 'less than'
-                   result_count < count
-                 when 'greater than'
-                   result_count > count
-                 when 'or less'
-                   result_count <= count
-                 when 'or more', 'at least'
-                   result_count >= count
-                 else
-                   fail ("Comparison #{compare_to} not supported")
-               end
-
-  #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
-  expect(result_count).to be == (count)
-
-
-end
-
-# Card 5.3***************************************************************************************************************
 
 Then(/^my text is truncated at (\d+) characters$/) do |truncate_size|
 

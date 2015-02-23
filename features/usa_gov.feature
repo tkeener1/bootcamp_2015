@@ -1,64 +1,64 @@
 Feature: USA.gov
 
-  Scenario: opening a web page    Card 2
-
-    Given I am on the USA.gov site
-
-
-  Scenario: Card 3 hooks
-    Given I go to USA.gov site
+  Background:
+    Given I am on the USA.gov home page
 
 
   Scenario: Card 5 Search section exists
-  #Given I am on the USA.gov site
     Then I see a search field
     And the field value is "Search the Government..."
     And the search button label is "Search"
 
   Scenario: Card 5.1 Enter Search
-  #Given I am on the USA.gov site
     When I submit a search "health"
     Then I see "at least 1" search result(s)
 
 
-  Scenario: Card 5.2 max answers
-  #Given I am on the USA.gov site
+  Scenario: Card 5.2 Max Answers per page is 20
     When I submit a search "healthy"
-    Then maximum of 20 answers per page returned
+    Then I see "20" search result(s)
 
   Scenario: Card 5.3 Character boundary (50 Max)
-  # Given I am on the USA.gov site
     When I submit a search "When I test to see if it accepts fifty 1 characters53"
     Then my text is truncated at 50 characters
 
 
   Scenario: Card 5.4  Alphanumeric are accepted
-  #Given I am on the USA.gov site
     When I submit a search "401k"
     Then I see "at least 1" search result(s)
 
   Scenario: Card 5.5 Special characters are accepted
-  #Given I am on the USA.gov site
     When I submit a search "?<>',?[]}{=-)/\|(*&^%$#`~{}"
     Then I see "at least 1" search result(s)
 
   Scenario: Card 5.6 No results provides helpful message
-  #Given I am on the USA.gov site
     When I submit a search "adfaefad&^%$#`~{}"
     Then "Sorry, no results found for 'adfaefad&^%$#`~{}'. Try entering fewer or broader query terms." is displayed
 
 
-  Scenario Outline: Parse Counter outline
-  #Given I am on the USA.gov site   (in hook)
+  Scenario Outline: Testing for search functionality acceptance
     When I submit a search "<search>"
     Then I see "<see>" search result(s)
 
-  Examples:
+  Examples:  Passes
     | search                      | see        |
     | health                      | at least 1 |
     | 401k                        | at least 1 |
     | ?<>',?[]}{=-)/\|(*&^%$#`~{} | at least 1 |
     | healthy                     | 20         |
+
+
+  Scenario Outline:Fail Testing for search functionality acceptance
+  #Given I am on the USA.gov site   (in hook)
+    When I submit a search "<search>"
+    Then I see "<see>" search result(s)
+
+  Examples:  Fails
+    | search                      | see       |
+    | health                      | a least 1 |
+    | 401k                        | t least 1 |
+    | ?<>',?[]}{=-)/\|(*&^%$#`~{} | at least  |
+    | healthy                     | 2         |
 
 
 
