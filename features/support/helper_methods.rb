@@ -2,7 +2,7 @@ module HelperMethods
   module Methods
 
     #launch a browser instance
-    def launch_browser(browser_name)
+    def launch_browser(browser_name)          #Where does browser get its name
       browser_name ||= 'ff'
             Watir::Browser.new(browser_name) #Create the method
 
