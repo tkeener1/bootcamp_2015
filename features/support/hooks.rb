@@ -1,13 +1,10 @@
-Before do
-  #launch the browser
-  # Set to the constant BROWSER
-  BROWSER = HelperMethods.launch_browser ENV['browser']       #ENV is a run time variable
-  BROWSER.goto ('USA.gov')
 
+Before('~@launch') do
+  HelperMethods.suppress_warnings do
+    BROWSER = HelperMethods.launch_browser
+  end
 end
 
-After do
-
+After('~@launch') do
   BROWSER.close
-
 end
