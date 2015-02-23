@@ -156,3 +156,8 @@ Then(/^"(.*?)" is displayed$/) do |error|
    fail ("Incorrect error message was displayed") unless BROWSER.div(:id=>'no-results').text.eql?(error)
 
 end
+
+
+Then(/^"(.*)" search is displayed$/) do |search|
+
+end

@@ -23,7 +23,7 @@ Feature: Cards
 
   Scenario: Card 5.2 max answers
   #Given I am on the USA.gov site
-    When I submit a search "health"
+    When I submit a search "healthy"
     Then maximum of 20 answers per page returned
 
   Scenario: Card 5.3 Character boundary (50 Max)
@@ -33,20 +33,52 @@ Feature: Cards
 
 
   Scenario: Card 5.4  Alphanumeric are accepted
-    #Given I am on the USA.gov site
+  #Given I am on the USA.gov site
     When I submit a search "401k"
     Then I see "at least 1" search result(s)
 
   Scenario: Card 5.5 Special characters are accepted
-    #Given I am on the USA.gov site
+  #Given I am on the USA.gov site
     When I submit a search "?<>',?[]}{=-)/\|(*&^%$#`~{}"
     Then I see "at least 1" search result(s)
 
   Scenario: Card 5.6 No results provides helpful message
-    #Given I am on the USA.gov site
+  #Given I am on the USA.gov site
     When I submit a search "adfaefad&^%$#`~{}"
     Then "Sorry, no results found for 'adfaefad&^%$#`~{}'. Try entering fewer or broader query terms." is displayed
 
+
+  Scenario Outline: Parse Counter outline
+  #Given I am on the USA.gov site   (in hook)
+    When I submit a search "<search>"
+    Then I see "<see>" search result(s)
+
+  Examples:
+    | search                      | see        |
+    | health                      | at least 1 |
+    | 401k                        | at least 1 |
+    | ?<>',?[]}{=-)/\|(*&^%$#`~{} | at least 1 |
+    | healthy                     | 20         |
+
+
+
+#| adfaefad&^%$#`~{}           | Sorry, no results found for 'adfaefad&^%$#`~{}'. Try entering fewer or broader query terms. |
+
+
+
+# Scenario Outline: Submit a Search Outline
+#    Given I am on the USA.gov site
+#    When I submit a search "<search>"
+#    Then "<search>" search is displayed
+#
+#  Examples:
+#    | search                                                |
+#    | health                                                |
+#    | healthy                                               |
+#    | When I test to see if it accepts fifty 1 characters53 |
+#    | 401k                                                  |
+#    | ?<>',?[]}{=-)/\|(*&^%$#`~{}                           |
+#    | adfaefad&^%$#`~{}                                     |
 
 
 
