@@ -71,21 +71,13 @@ Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
 
   #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
   expect(result_count).to be >= (count)
-
-<<<<<<< HEAD
-end
-
-
-
-
-=======
-
+  puts parse_count
 end
 
 
 
 # Card 5.3***************************************************************************************************************
->>>>>>> card9
+
 
 Then(/^my text is truncated at (\d+) characters$/) do |truncate_size|
 
@@ -103,4 +95,27 @@ Then(/^"(.*?)" is displayed$/) do |error|
 
   #fail ("Incorrect error message was displayed") unless BROWSER.div(:id=>'no-results').text.eql?(error)
   expect(BROWSER.div(:id=>'no-results').text).to eq(error)
+end
+
+# Card 9****************************************************************************************
+#collect = BROWSER.as(:class=>'summary_link')
+#collect.each do |this|
+#  puts this.text
+#end
+
+
+Then(/^there will be a box named "(.*?)"$/) do |box_name|
+    expect(BROWSER.div(:class=>'hpboxcontainer').text).to include(box_name)
+
+end
+
+
+Then(/^I see a contents section$/) do
+  expect(BROWSER.div(:class=>'hpboxcontainer')).to exist
+end
+
+
+Then(/^the box contains the text "(.*?)"$/) do |content|
+  expect(BROWSER.div(:class=>'hpboxcontainer').h2.text).to include content
+
 end

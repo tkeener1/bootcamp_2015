@@ -1,4 +1,11 @@
 Feature: USA.gov
+   Acceptance Criteria:
+   A contents box exists as a div with class 'hpboxcontainer'
+   The content box contains the word Content in it
+   Other sections will have the term container as part of the class attribute
+   One of the sections will be a div with the id 'featureInfo'
+   The link text should match the section text
+
 
   Background:
     Given I am on the USA.gov home page
@@ -14,11 +21,7 @@ Feature: USA.gov
     Then I see "at least 1" search result(s)
 
 
-<<<<<<< HEAD
-  Scenario: Card 5.2 Max Answers per page is 20
-=======
   Scenario: Card 5.2 Max answers per page is 20
->>>>>>> card9
     When I submit a search "healthy"
     Then I see "20" search result(s)
 
@@ -40,11 +43,8 @@ Feature: USA.gov
     Then "Sorry, no results found for 'adfaefad&^%$#`~{}'. Try entering fewer or broader query terms." is displayed
 
 
-<<<<<<< HEAD
-  Scenario Outline: Testing for search functionality acceptance
-=======
   Scenario Outline: Testing Search Field Alphanumeric and Special Character Acceptance
->>>>>>> card9
+
     When I submit a search "<search>"
     Then I see "<see>" search result(s)
 
@@ -56,25 +56,9 @@ Feature: USA.gov
     | healthy                     | 20         |
 
 
-<<<<<<< HEAD
-  Scenario Outline:Fail Testing for search functionality acceptance
-  #Given I am on the USA.gov site   (in hook)
-    When I submit a search "<search>"
-    Then I see "<see>" search result(s)
-
-  Examples:  Fails
-    | search                      | see       |
-    | health                      | a least 1 |
-    | 401k                        | t least 1 |
-    | ?<>',?[]}{=-)/\|(*&^%$#`~{} | at least  |
-    | healthy                     | 2         |
-
-
-=======
   Scenario Outline: Fail Testing Search Field Alphanumeric and Special Character Acceptance
     When I submit a search "<search>"
     Then I see "<see>" search result(s)
->>>>>>> card9
 
   Examples:
     | search                      | see         |
@@ -84,7 +68,31 @@ Feature: USA.gov
     | healthy                     | 21          |
 
 
+ # Card10*********************************************************
 
+   Scenario: Verify the contents section exists
+     Then I see a contents section
+     And the box contains the text "Content"
+
+
+
+
+  Scenario Outline: Verify the 4 container boxes exist
+    Then there will be a box named "<box_name>"
+
+  Examples:
+    | box_name                                  |
+    | Content on This Page                      |
+    | Services and Information                  |
+    | Get E-mail Updates from USA.gov           |
+    | Government Agencies and Elected Officials |
+
+
+
+   # collections for links and sections
+   # test collections have same amounts
+   # nested each
+   # span-text
 
 
 
