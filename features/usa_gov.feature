@@ -14,7 +14,11 @@ Feature: USA.gov
     Then I see "at least 1" search result(s)
 
 
+<<<<<<< HEAD
   Scenario: Card 5.2 Max Answers per page is 20
+=======
+  Scenario: Card 5.2 Max answers per page is 20
+>>>>>>> card9
     When I submit a search "healthy"
     Then I see "20" search result(s)
 
@@ -36,7 +40,11 @@ Feature: USA.gov
     Then "Sorry, no results found for 'adfaefad&^%$#`~{}'. Try entering fewer or broader query terms." is displayed
 
 
+<<<<<<< HEAD
   Scenario Outline: Testing for search functionality acceptance
+=======
+  Scenario Outline: Testing Search Field Alphanumeric and Special Character Acceptance
+>>>>>>> card9
     When I submit a search "<search>"
     Then I see "<see>" search result(s)
 
@@ -48,6 +56,7 @@ Feature: USA.gov
     | healthy                     | 20         |
 
 
+<<<<<<< HEAD
   Scenario Outline:Fail Testing for search functionality acceptance
   #Given I am on the USA.gov site   (in hook)
     When I submit a search "<search>"
@@ -61,56 +70,18 @@ Feature: USA.gov
     | healthy                     | 2         |
 
 
+=======
+  Scenario Outline: Fail Testing Search Field Alphanumeric and Special Character Acceptance
+    When I submit a search "<search>"
+    Then I see "<see>" search result(s)
+>>>>>>> card9
 
-#| adfaefad&^%$#`~{}           | Sorry, no results found for 'adfaefad&^%$#`~{}'. Try entering fewer or broader query terms. |
-
-
-
-# Scenario Outline: Submit a Search Outline
-#    Given I am on the USA.gov site
-#    When I submit a search "<search>"
-#    Then "<search>" search is displayed
-#
-#  Examples:
-#    | search                                                |
-#    | health                                                |
-#    | healthy                                               |
-#    | When I test to see if it accepts fifty 1 characters53 |
-#    | 401k                                                  |
-#    | ?<>',?[]}{=-)/\|(*&^%$#`~{}                           |
-#    | adfaefad&^%$#`~{}                                     |
-
-
-
-#    acceptance criteria
-#
-#
-#
-#    acceptance criteria
-#    given i am on the page
-#    then i see the search field associated with the search
-#    when i type text into the search field then i see the text i type
-#
-#
-#    When
-#    And I type text into the search field
-#    When i enter text over 50 characters
-#    Then my text is truncated at 50 characters
-#
-#    When I enter a query with alpha number and special characters
-#    And I submit a search
-#    Then the search will execute
-#
-#    When i enter a query that will return a query with more than 20 results
-#    Then i will have a page that returns 20 results
-#
-#   What happens when no results r returned**********************!*!**!*!*!*!*!*!
-#   Then I see an indication of no results were found
-#         /^result/
-#   text field value, for character
-
-
-
+  Examples:
+    | search                      | see         |
+    | health                      | least 1     |
+    |                             | at least 1  |
+    | ?<>',?[]}{=-)/\|(*&^%$#`~{} | at least 21 |
+    | healthy                     | 21          |
 
 
 

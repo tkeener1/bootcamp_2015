@@ -72,17 +72,26 @@ Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
   #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
   expect(result_count).to be >= (count)
 
+<<<<<<< HEAD
 end
 
 
 
 
+=======
+
+end
+
+
+
+# Card 5.3***************************************************************************************************************
+>>>>>>> card9
 
 Then(/^my text is truncated at (\d+) characters$/) do |truncate_size|
 
-  actual_entered = BROWSER.text_field(:id=>'query').value.size.to_s
+  expect(actual_entered = BROWSER.text_field(:id=>'query').value.size.to_s).to eq(truncate_size)
 
-  fail ("Text field accepted #{actual_entered} instead of #{truncate_size}.") unless actual_entered == truncate_size
+  #fail ("Text field accepted #{actual_entered} instead of #{truncate_size}.") unless actual_entered == truncate_size
 
 end
 
@@ -92,6 +101,6 @@ end
 
 Then(/^"(.*?)" is displayed$/) do |error|
 
-  fail ("Incorrect error message was displayed") unless BROWSER.div(:id=>'no-results').text.eql?(error)
-
+  #fail ("Incorrect error message was displayed") unless BROWSER.div(:id=>'no-results').text.eql?(error)
+  expect(BROWSER.div(:id=>'no-results').text).to eq(error)
 end
