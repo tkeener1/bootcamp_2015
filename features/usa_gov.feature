@@ -20,7 +20,6 @@ Feature: USA.gov
     When I submit a search "health"
     Then I see "at least 1" search result(s)
 
-
   Scenario: Card 5.2 Max answers per page is 20
     When I submit a search "healthy"
     Then I see "20" search result(s)
@@ -28,7 +27,6 @@ Feature: USA.gov
   Scenario: Card 5.3 Character boundary (50 Max)
     When I submit a search "When I test to see if it accepts fifty 1 characters53"
     Then my text is truncated at 50 characters
-
 
   Scenario: Card 5.4  Alphanumeric are accepted
     When I submit a search "401k"
@@ -72,36 +70,6 @@ Feature: USA.gov
 
    Scenario: Verify the contents section exists
      Then I see a contents section
-     And the box contains the text "Content"
-
-
-
-
-  Scenario Outline: Verify the 4 container boxes exist
-    Then there will be a box named "<box_name>"
-
-  Examples:
-    | box_name                                  |
-    | Content on This Page                      |
-    | Services and Information                  |
-    | Get E-mail Updates from USA.gov           |
-    | Government Agencies and Elected Officials |
-
-
-
-   # collections for links and sections
-   # test collections have same amounts
-   # nested each
-   # span-text
-
-
-
-
-
-
-
-
-
-
-
+     And the box title contains the text "Content"
+     And there is a link for each page section
 

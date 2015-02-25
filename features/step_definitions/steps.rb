@@ -115,7 +115,24 @@ Then(/^I see a contents section$/) do
 end
 
 
-Then(/^the box contains the text "(.*?)"$/) do |content|
+Then(/^the box title contains the text "(.*?)"$/) do |content|
   expect(BROWSER.div(:class=>'hpboxcontainer').h2.text).to include content
 
+end
+When(/^there is a link for each page section$/) do
+  sections=[]
+  section_links=[]
+
+  BROWSER.div(:class=>'hpboxcontainer').links.each do |item|
+    link_text = item.text.downcase
+    link_text.gsub!('from usa.gov','1').strip if link_text=~/e-mail/
+    section_links<<link_text
+  end
+
+  BROWSER.divs(:class=>/.*container/).each{|section| sections.push(section.h3.text.downcase) if section.h3.exist?}
+  #sections.push(BROWSER.div(:id=>'featureInfo').h2.text.downcase)
+
+  #expected(section_links).to match_array(sections.sort)
+  puts sections
+  puts section_links
 end
