@@ -149,7 +149,10 @@ When(/^I click the "(.*)" link$/) do |search|
 end
 
 
-Then(/^I am on the "(.*)" Calculator page$/) do |string|
-  expect(BROWSER.title).to include string
+
+
+Then(/^I am on the "(.*)" Calculator page$/) do |title|
+  expect(BROWSER.title).to include title
 end
 
+ #Card 12***************************************************************************
