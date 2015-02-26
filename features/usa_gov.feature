@@ -1,10 +1,11 @@
 Feature: USA.gov
-   Acceptance Criteria:
-   A contents box exists as a div with class 'hpboxcontainer'
-   The content box contains the word Content in it
-   Other sections will have the term container as part of the class attribute
-   One of the sections will be a div with the id 'featureInfo'
-   The link text should match the section text
+  Acceptance Criteria:
+  The user to navigate to a new savings bond calculator on the treasury site-
+  from the usa.gov home page
+
+  The new link on the usa.gov site will be on the 'Savings and Investing' page
+
+  The link at the treasury site will be on the individual 'Tools' page
 
 
   Background:
@@ -66,10 +67,18 @@ Feature: USA.gov
     | healthy                     | 21          |
 
 
- # Card10*********************************************************
+# Card10*********************************************************
 
-   Scenario: Verify the contents section exists
-     Then I see a contents section
-     And the box title contains the text "Content"
-     And there is a link for each page section
+  Scenario: Verify the contents section exists
+    Then I see a contents section
+    And the box title contains the text "Content"
+    And there is a link for each page section
 
+#Card11 **************************************************************
+
+  Scenario: navigate to Savings Bonds Calculator from home page
+    And I click the "Unclaimed Money, Taxes, and Credit Reports" link
+    And I click the "Saving and Investing" link
+    And I click the "Savings Bonds Online" link
+    And I click the "Savings Bonds Calculator" link
+    Then I am on the "Savings Bond" Calculator page
