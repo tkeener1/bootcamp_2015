@@ -71,11 +71,12 @@ Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
 
   #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
   expect(result_count).to be >= (count)
-
+  puts parse_count
 end
 
 
 # Card 5.3***************************************************************************************************************
+
 
 Then(/^my text is truncated at (\d+) characters$/) do |truncate_size|
 
@@ -95,8 +96,19 @@ Then(/^"(.*?)" is displayed$/) do |error|
   expect(BROWSER.div(:id => 'no-results').text).to eq(error)
 end
 
+# Card 9****************************************************************************************
+#collect = BROWSER.as(:class=>'summary_link')
+#collect.each do |this|
+#  puts this.text
+#end
 
-#Card 10***********************************************
+
+Then(/^there will be a box named "(.*?)"$/) do |box_name|
+  expect(BROWSER.div(:class => 'hpboxcontainer').text).to include(box_name)
+
+end
+
+
 Then(/^I see a contents section$/) do
   expect(BROWSER.div(:class => 'hpboxcontainer')).to exist
 end
@@ -112,17 +124,19 @@ When(/^there is a link for each page section$/) do
 
   BROWSER.div(:class => 'hpboxcontainer').links.each do |item|
     link_text = item.text.downcase
-    link_text.gsub!('from usa.gov','') if link_text=~/e-mail/
-    section_links<<link_text.strip
-   end
-  BROWSER.divs(:class => /.*container/).each do |section| 
-  	sections.push(section.h3.text.downcase) if section.h3.exist? 
+    link_text.gsub!('from usa.gov', '1').strip if link_text=~/e-mail/
+    section_links<<link_text
   end
 
-  sections.push(BROWSER.div(:id=>'featureInfo').text.downcase) if BROWSER.div(:id=>'featureInfo').exist?
+  BROWSER.divs(:class => /.*container/).each { |section| sections.push(section.h3.text.downcase) if section.h3.exist? }
+  #sections.push(BROWSER.div(:id=>'featureInfo').h2.text.downcase)
 
-  expect(section_links.sort).to match_array(sections.sort)
+  #expected(section_links).to match_array(sections.sort)
+  puts sections
+  puts section_links
 end
+
+#Card 11******************************************************************************
 
 
 When(/^I click the "(.*)" link$/) do |search|
