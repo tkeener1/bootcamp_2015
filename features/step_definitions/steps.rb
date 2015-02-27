@@ -3,142 +3,75 @@ Given(/^I open the "(.*?)" browser$/) do |browser|
 end
 
 Then(/^the "(.*?)" browser is open$/) do |browser|
-  fail ("The #{browser} browser is not open.") unless HelperMethods.to_browser_id(browser) == @browser_opened.name
+  browser_name = @browser_opened.name
   @browser_opened.close
+  expect(browser_name).to eq(HelperMethods.to_browser_id(browser))
 end
 
 Given /^I am on the USA.gov home page$/ do
   BROWSER.goto 'www.usa.gov'
 end
 
-#Card 5**********************************************************
-
-
-Then(/^I see a search field$/) do
-  # old fail('The browser does not contain a search box') unless BROWSER.text_field(:id => 'query').visible?
-  expect(BROWSER.text_field(:id => 'query')).to be_visible
+Then /^I see a search field$/ do
+  expect(BROWSER.text_field(:id => "query")).to be_visible
 end
 
-Then (/^the field value is "(.*?)"$/) do |arg1|
-  #fail('the browser does not contain the correct place holder') unless BROWSER.text_field(:id => 'query').placeholder.eql? arg1
-  expect(BROWSER.text_field(:id => 'query').placeholder).to eq(arg1)
-
+Then /^the search field value is "([^"]*)"$/ do |search_string|
+  actual =  BROWSER.text_field(:id => "query").placeholder
+  expect(actual).to eq(search_string)
 end
 
-
-Then (/^I see a search button$/) do
+Then /^I see a search button$/ do
+  expect(BROWSER.button(:id => "buscarSubmit")).to be_present
 end
 
-
-Then (/^the search button label is "(.*?)"$/) do |arg1|
-  #fail('Search button is not titled correctly') unless BROWSER.button(:id => 'buscarSubmit').value.eql?(arg1)
-  expect(BROWSER.button(:id => 'buscarSubmit').value).to eq(arg1)
+Then /^the search button label is "([^"]*)"$/ do |button_label|
+  actual =  BROWSER.button(:id => "buscarSubmit").text
+  expect(actual).to eq(button_label)
 end
-
-# Card 5.1******************************************************************************************************
 
 When(/^I submit a search "(.*?)"$/) do |search_string|
-  BROWSER.text_field(:id => 'query').set(search_string)
-  BROWSER.button(:id => 'buscarSubmit').click
+  BROWSER.text_field(:id => "query").set search_string
+  BROWSER.button(:id => "buscarSubmit").click
 end
 
-
 Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
-
-  # parse expected count
-  parse_count = expected_count.to_s.match(/(\d*)([a-z|A-Z ]*)(\d*)/) #match makes an array
+# parse expected count
+  parse_count = expected_count.to_s.match(/(\d*)([a-z|A-Z ]*)(\d*)/)
   compare_to = parse_count[2].strip
   count = parse_count[1] == '' ? parse_count[3].to_i : parse_count[1].to_i
 
 # get the number of results
   result_count = BROWSER.divs(:id => /^result-/).size
 
-
+# determine if step passes 
   comparison = case compare_to
-                 when '', /equal/
-                   count == result_count
-                 when 'less than'
-                   result_count < count
-                 when 'greater than'
-                   result_count > count
-                 when 'or less'
-                   result_count <= count
-                 when 'or more', 'at least'
-                   result_count >= count
-                 else
-                   fail ("Comparison #{compare_to} not supported")
+               when '', /equal/
+                 count == result_count
+               when 'less than'
+                 result_count < count
+               when 'greater than'
+                 result_count > count
+               when 'or less'
+                 result_count <= count
+               when 'or more', 'at least'
+                 result_count >= count
+               else
+                 fail ("Comparison #{compare_to} not supported")
                end
 
-  #fail("The actual count #{result_count} does not match the expected count #{expected_count}.") unless comparison
-  expect(result_count).to be >= (count)
-
+  expect(comparison).to be_truthy
 end
 
+Then /^a "([^"]*)" message displays$/ do |message|
+  actual = BROWSER.div(:id => 'no-results').text
 
-# Card 5.3***************************************************************************************************************
-
-Then(/^my text is truncated at (\d+) characters$/) do |truncate_size|
-
-  expect(actual_entered = BROWSER.text_field(:id => 'query').value.size.to_s).to eq(truncate_size)
-
-  #fail ("Text field accepted #{actual_entered} instead of #{truncate_size}.") unless actual_entered == truncate_size
-
+  fail("The message #{actual} does not contain the text #{message}") unless actual =~ /#{message}/
 end
 
-
-# Card 5.5************************************************************************************************************88
-
-
-Then(/^"(.*?)" is displayed$/) do |error|
-
-  #fail ("Incorrect error message was displayed") unless BROWSER.div(:id=>'no-results').text.eql?(error)
-  expect(BROWSER.div(:id => 'no-results').text).to eq(error)
+Then /^I see the search term truncated to (\d+) characters$/ do |character_number|
+  expected = character_number.to_i
+  # get search string from edit field
+  actual = BROWSER.text_field(:id => "query").value.size
+  expect(actual).to eq(expected)
 end
-
-
-#Card 10***********************************************
-Then(/^I see a contents section$/) do
-  expect(BROWSER.div(:class => 'hpboxcontainer')).to exist
-end
-
-
-Then(/^the box title contains the text "(.*?)"$/) do |content|
-  expect(BROWSER.div(:class => 'hpboxcontainer').h2.text).to include content
-
-end
-When(/^there is a link for each page section$/) do
-  sections=[]
-  section_links=[]
-
-  BROWSER.div(:class => 'hpboxcontainer').links.each do |item|
-    link_text = item.text.downcase
-    link_text.gsub!('from usa.gov','') if link_text=~/e-mail/
-    section_links<<link_text.strip
-   end
-  BROWSER.divs(:class => /.*container/).each do |section| 
-  	sections.push(section.h3.text.downcase) if section.h3.exist? 
-  end
-
-  sections.push(BROWSER.div(:id=>'featureInfo').text.downcase) if BROWSER.div(:id=>'featureInfo').exist?
-
-  expect(section_links.sort).to match_array(sections.sort)
-end
-
-
-When(/^I click the "(.*)" link$/) do |search|
-
-  if search == 'Savings Bonds Calculator'
-    BROWSER.div(:id => 'icon1').click
-  else
-    BROWSER.link(:text => /#{search}/).click
-  end
-end
-
-
-
-
-Then(/^I am on the "(.*)" Calculator page$/) do |title|
-  expect(BROWSER.title).to include title
-end
-
- #Card 12***************************************************************************
