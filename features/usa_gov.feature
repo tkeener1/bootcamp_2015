@@ -1,7 +1,7 @@
 Feature: USA gov home page
 
   Background:
-    Given I am on the USA.gov home page
+    Given I am on the "USA home" page
 
   Scenario: Search section exists
      Then I see a search field
@@ -71,3 +71,7 @@ Feature: USA gov home page
     And the field value is "Se1arch the Government..."
     And I see a search button
     And the button label is "Sea1rch"
+
+
+
+

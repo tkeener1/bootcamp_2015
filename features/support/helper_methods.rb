@@ -5,7 +5,7 @@ module HelperMethods
     def launch_browser
       ENV['browser'] ||= 'firefox'
 
-      Watir::Browser.new to_browser_id(ENV['browser'])
+      Watir::Browser.new to_browser_id(ENV['browser'])  #Does the parenthesis mean or?
     end
 
     #Convert user names for browser to strings for watir-webdriver
