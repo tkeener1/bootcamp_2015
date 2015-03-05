@@ -1,5 +1,22 @@
 Feature: USA gov home page
 
+#  Acceptance Criteria:
+#
+#  Given Im on USA home page
+#
+#  Then I see a content box
+#
+#  Given............
+#  Then I see links in the contents section
+#
+#  Then the contents section contains 1 link for every section on the page except for content section itself, "Find Governement Information..." section, The "Stay connected..."
+#
+#  When I click a link in the section it takes me to the appropriate section on the page
+#  Then I see the appropriate section on the page
+#
+#
+
+
   Background:
     Given I am on the "USA home" page
 
