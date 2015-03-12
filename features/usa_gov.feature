@@ -21,7 +21,7 @@ Feature: USA gov home page
     Given I am on the "USA home" page
 
   Scenario: Search section exists
-     Then I see a search field
+    Then I see a search field
 
   Scenario: Search field value
     Then the search field value is "Search the Government..."
@@ -61,11 +61,28 @@ Feature: USA gov home page
   Scenario: Search 0 results
     When I submit a search "This.statement.can.have.50.characters.but.not...."
     Then a message is displayed that contains "no results found"
-  
+
   Scenario: Enter search - more than 50 characters - truncation
     When I submit a search "This.statement.can.have.50.characters.but.not....51"
     Then I see the search term truncated to 50 characters
 
+  Scenario: Contents section exists
+    Then I see a contents section
+
+  Scenario: Section title
+    Then the section title contains the text "Content"
+
+  Scenario: Page content links
+    Then there is a link for each page section
+
+  Scenario Outline: Page content links go to correct section
+    When I click the content link "<link_name>"
+    Then the "<link_name>" section is visible
+  Examples:
+    | link_name                                 |
+    | Services and Information                  |
+    | Get E-mail Updates from USA.gov           |
+    | Government Agencies and Elected Officials |
 
 ##failing scenarios
 
@@ -85,6 +102,10 @@ Feature: USA gov home page
 
   Scenario: Failed Search section exists
     Then the search field value is "Se1arch the Government..."
+
+
+
+
 
 
 

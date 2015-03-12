@@ -11,16 +11,11 @@ Then /^I see a search button$/ do
 end
 
 Then /^the search button label is "([^"]*)"$/ do |button_label|
-  #actual =  BROWSER.button(:id => "buscarSubmit").text
   expect(@current_page.submit_label).to eq(button_label)
 end
 
 When(/^I submit a search "(.*?)"$/) do |search_string|
-  #BROWSER.text_field(:id => "query").set search_string
-  #BROWSER.button(:id => "buscarSubmit").click
-
   @current_page.submit_search search_string
-
 end
 
 Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
@@ -39,10 +34,7 @@ Then(/^I see "(.*?)" search result\(s\)$/) do |expected_count|
 end
 
 Then(/^a message is displayed that contains "([^"]*)"$/) do |message|
-  actual = @current_page.message
-
-  expect(actual).to include(message)
-
+  expect(@current_page.message).to include(message)
 end
 
 Then /^I see the search term truncated to (\d+) characters$/ do |character_number|
@@ -51,3 +43,35 @@ Then /^I see the search term truncated to (\d+) characters$/ do |character_numbe
   actual = @current_page.search_value.size
   expect(actual).to eq(expected)
 end
+
+Then(/^I see a contents section$/) do
+  expect(@current_page.content_box).to exist
+end
+
+
+Then(/^the section title contains the text "(.*?)"$/) do |content|
+  expect(@current_page.content_box_title).to include content
+end
+
+
+Then(/^there is a link for each page section$/) do
+  actual = @current_page.link_names.sort
+  actual.collect! {|name| name.upcase}
+  actual.collect! {|name| name=~/e-mail/i ? name.gsub!(' FROM USA.GOV', '') : name}
+
+  expect(actual).to match_array(@current_page.section_titles.sort)
+end
+
+
+When(/^I click the content link "([^"]*)"$/) do |link_name|
+  @current_page.click_content_link(link_name)
+end
+
+
+Then(/^the "([^"]*)" section is visible$/) do |expected|
+  expected.gsub!(' ', '_')
+  expected = 'eml-alrt' if expected =~ /e-mail/i
+
+  expect(@current_page.current_url).to include(expected)
+end
+
