@@ -81,4 +81,4 @@ Feature: USA.gov
     And I click the "Saving and Investing" link
     And I click the "Savings Bonds Online" link
     And I click the "Savings Bonds Calculator" link
-    Then I am on the "Savings Bond" Calculator page
+    Then I am on the "Savings Bond" page

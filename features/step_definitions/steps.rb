@@ -112,14 +112,14 @@ When(/^there is a link for each page section$/) do
 
   BROWSER.div(:class => 'hpboxcontainer').links.each do |item|
     link_text = item.text.downcase
-    link_text.gsub!('from usa.gov','') if link_text=~/e-mail/
+    link_text.gsub!('from usa.gov', '') if link_text=~/e-mail/
     section_links<<link_text.strip
-   end
-  BROWSER.divs(:class => /.*container/).each do |section| 
-  	sections.push(section.h3.text.downcase) if section.h3.exist? 
+  end
+  BROWSER.divs(:class => /.*container/).each do |section|
+    sections.push(section.h3.text.downcase) if section.h3.exist?
   end
 
-  sections.push(BROWSER.div(:id=>'featureInfo').text.downcase) if BROWSER.div(:id=>'featureInfo').exist?
+  sections.push(BROWSER.div(:id => 'featureInfo').text.downcase) if BROWSER.div(:id => 'featureInfo').exist?
 
   expect(section_links.sort).to match_array(sections.sort)
 end
@@ -132,13 +132,11 @@ When(/^I click the "(.*)" link$/) do |search|
   else
     BROWSER.link(:text => /#{search}/).click
   end
+
 end
 
-
-
-
-Then(/^I am on the "(.*)" Calculator page$/) do |title|
+Then(/^I am on the "(.*)" page$/) do |title|
   expect(BROWSER.title).to include title
 end
 
- #Card 12***************************************************************************
+#Card 12***************************************************************************
